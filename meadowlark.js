@@ -2,18 +2,20 @@ import express from 'express'
 import { engine } from 'express-handlebars'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
+import fortune from './lib/fortune'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 const app = express()
-
+/**
 const fortunes = ["Conquer your fears or they will conquer you.",
   "Rivers need springs.",
   "Do not fear what you don't know.",
   "You will have a pleasant surprise.",
   "Whenever possible, keep it simple.",
 ]
+**/
 app.use(express.static(__dirname + '/public'))
 
 // configure Handlebars view engine
@@ -27,8 +29,7 @@ const port = process.envPORT || 3000
 app.get('/', (req,res) => res.render('home'))
 
 app.get('/about', (req, res) =>{
-  const randomFortune = fortunes[Math.floor(Math.random()*fortunes.length)]
-  res.render('about', { fortune: randomFortune })
+  res.render('about', { fortune: fortune.getFortune() })
 })
 
 
